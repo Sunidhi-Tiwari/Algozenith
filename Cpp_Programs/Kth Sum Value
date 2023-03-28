@@ -1,0 +1,81 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long int
+#define forn(i,n) for(int i=0;i<n;i++)
+#define pb push_back
+#define ff first 
+#define ss second 
+const int M = 1e9 + 7;
+const int N = 1000005;
+int n,m,k;
+int a[N], b[N];
+
+int check(int x)
+{
+    int cur = 0;
+    
+    for(int i = 0; i<n; i++)
+    {
+        int temp = upper_bound(b, b+m, x-a[i]) - b;
+        cur += temp;
+    }
+    
+    return cur>=k;
+}
+
+void solve()
+{  
+    cin>>n>>m>>k;
+    
+    forn(i,n)
+    cin>> a[i];
+    forn(i,m)
+    cin>> b[i];
+    
+    if(n>m)
+    {   
+        swap(a,b);
+        swap(n,m);
+    }
+    
+    sort(a,a+n);
+    sort(b,b+m);
+    
+    int lo = a[0] + b[0];
+    int hi = a[n-1] + b[m-1];
+    
+    int ans = a[0] + b[0];
+    
+    while(lo<=hi)
+    {
+        int mid = (lo+hi)/2;
+        
+        if(check(mid))
+        {
+            ans = mid;
+            hi = mid - 1;
+        }
+        else
+        {
+            lo = mid + 1;
+        }
+        
+    }
+    cout<<ans<<"\n";
+    
+    return;
+}
+
+signed main()
+{   IOS
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        solve();
+    }
+    
+    return 0;
+}
