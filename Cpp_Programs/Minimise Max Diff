@@ -34,7 +34,7 @@ int check(int x)
    
 
 signed main()
-{   IOS
+{  IOS
    int t;
    cin>>t;
    while(t--)
