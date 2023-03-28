@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long int
+#define forn(i,n) for(int i=0;i<n;i++)
+#define pb push_back
+#define ff first 
+#define ss second 
+const int M = 1e9 + 7;
+
+int n,k;
+int arr[100100];
+
+int check(int x)
+{
+    int last_left = 0;
+    int painter_needed = 0;
+    
+    for(int i = 0; i<n; i++)
+    {
+        if(arr[i] <= last_left)
+        {
+            last_left -= arr[i];
+        }
+        else
+        {
+            painter_needed++;
+            if(painter_needed>k) return 0;
+            last_left = x - arr[i];
+            if(last_left<0) return 0;
+        }
+    }
+    
+    return painter_needed <= k;
+}
+
+void solve()
+{   
+    cin>>n>>k;
+    long long sum = 0;
+    
+    forn(i,n)
+    {
+    cin>>arr[i];
+    sum += arr[i];
+    }
+    
+    int lo = 0;
+    int hi = sum;
+    int ans;
+    while(lo<=hi)
+    {
+        int mid = lo + (hi - lo)/2;
+        if(check(mid))
+        {
+            ans = mid;
+            hi = mid - 1;
+        }
+        else
+        {
+            lo = mid+1;
+        }
+    }
+    
+    cout<<ans<<"\n";
+    return;
+}
+
+signed main()
+{   IOS
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        solve();
+    }
+    
+    return 0;
+}
