@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long int
+#define forn(i,n) for(int i=0;i<n;i++)
+#define pb push_back
+#define ff first 
+#define ss second 
+const int M = 1e9 + 7;
+
+int n,q;
+vector<int> v;
+
+int check(int x)
+{   
+    if(x == n) return 1;
+    if(v[x]<v[x+1]) return 0;
+    else return 1;
+}
+
+
+void solve()
+{   
+    
+    cin>>n>>q;
+    
+    v.resize(n);
+    forn(i,n)
+    cin>>v[i];
+    
+    int ans,lo,hi;
+
+    lo = 0;
+    hi = n-1;
+    
+    while(lo<=hi)
+    {
+        int mid = (lo+hi)/2;
+        if(check(mid))
+        {
+            ans = mid;
+            hi =  mid - 1 ;
+        }
+        else
+        {
+            lo = mid + 1;
+        }
+    }
+    
+    
+   while(q--)
+    {
+        int k;
+        cin>>k;
+        
+        
+        
+        lo = 0;
+        hi = ans;
+        
+        vector<int> pos;
+        
+        while(lo<=hi)
+        {
+            int mid = (lo+hi)/2;
+            
+            if(v[mid] == k)
+            {
+             pos.push_back(mid+1);
+             break;
+            
+            }
+            else if(v[mid]>k)
+            hi = mid - 1;
+            else
+            lo = mid + 1;
+        }
+        
+        lo = ans + 1;
+        hi = n - 1;
+        
+        while(lo<=hi)
+        {
+            int mid = (lo+hi)/2;
+            
+            if(v[mid] == k)
+            {
+             pos.push_back(mid+1);
+             break;
+            }
+            else if(v[mid]>k)
+            lo = mid + 1;
+            else
+             hi = mid - 1;
+        }
+        
+        for(auto i: pos)
+        cout<<i<<" ";
+        cout<<"\n"; 
+    }
+ return;
+   
+}
+
+signed main()
+{   IOS
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        solve();
+    }
+    
+    return 0;
+}
